@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/projects")
 @RequiredArgsConstructor
@@ -29,5 +31,10 @@ public class ProjectController {
     @GetMapping("{projectId}")
     public ProjectResponseDto getProject(@PathVariable("projectId") Integer projectId) {
         return projectService.getProject(projectId);
+    }
+
+    @GetMapping("")
+    public List<ProjectResponseDto> getAllProjects() {
+        return projectService.getAllProjects();
     }
 }

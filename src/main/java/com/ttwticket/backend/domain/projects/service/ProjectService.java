@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +36,12 @@ public class ProjectService {
         return ProjectResponseDto.builder()
                 .project(projectRepository.findByProjectId(projectId))
                 .build();
+    }
+
+    public List<ProjectResponseDto> getAllProjects() {
+        return projectRepository.findAll().stream()
+                .map(ProjectResponseDto::new)
+                .collect(Collectors.toList());
     }
 
 }
