@@ -21,4 +21,11 @@ public class ProjectService {
                 .build();
         return projectIdResponseDto;
     }
+
+    @Transactional
+    public Integer modifyProject(Integer projectId, ProjectRequestDto projectRequestDto) {
+        projectRepository.findByProjectId(projectId).modifyProject(projectRequestDto);
+        return projectId;
+    }
+
 }

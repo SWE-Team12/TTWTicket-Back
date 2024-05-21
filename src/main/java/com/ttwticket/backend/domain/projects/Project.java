@@ -1,6 +1,7 @@
 package com.ttwticket.backend.domain.projects;
 
 import com.ttwticket.backend.domain.BaseTimeEntity;
+import com.ttwticket.backend.domain.projects.dto.ProjectRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,5 +26,10 @@ public class Project extends BaseTimeEntity{
     public Project(String title, String description) {
         this.title = title;
         this.description = description;
+    }
+
+    public void modifyProject(ProjectRequestDto projectRequestDto) {
+        this.title = projectRequestDto.getTitle();
+        this.description = projectRequestDto.getDescription();
     }
 }
