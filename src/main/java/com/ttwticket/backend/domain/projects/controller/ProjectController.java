@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 public class ProjectController {
+    
     private final ProjectService projectService;
 
+    @PostMapping("")
+    public ProjectIdResponseDto create(@RequestBody ProjectRequestDto projectRequestDto) {
+        return projectService.createProject(projectRequestDto);
+    }
 }
