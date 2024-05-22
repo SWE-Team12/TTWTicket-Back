@@ -30,7 +30,7 @@ public class UserService {
 
     @Transactional
     public User login(UserLoginDto userLoginDto) {
-        Optional<User> optionalUser = userRepository.findByEmail(userLoginDto.getEmail());
+        Optional<User> optionalUser = userRepository.findByEmailAndIsDeleted(userLoginDto.getEmail(), false);
 
         if (optionalUser.isEmpty()) {
             return null;

@@ -1,5 +1,6 @@
 package com.ttwticket.backend.domain.users;
 
+import com.ttwticket.backend.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,22 +11,25 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
     @Column(nullable = false, length = 10)
-    String name;
+    private String name;
 
     @Column(nullable = false, length = 50)
-    String email;
+    private String email;
 
     @Column(nullable = false, length = 100)
-    String password;
+    private String password;
 
     @Column(nullable = false, length = 20)
-    Role role;
+    private Role role;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
 
     @Builder
     public User(String name, String email, String password, Role role) {
@@ -33,5 +37,6 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.isDeleted = false;
     }
 }
