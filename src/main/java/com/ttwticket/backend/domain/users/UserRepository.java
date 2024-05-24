@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    public Optional<User> findByUserId(Integer userId);
+    User findByUserIdAndIsDeleted(Integer userId, Boolean isDeleted);
 
-    public Optional<User> findByEmailAndIsDeleted(String email, Boolean isDeleted);
+    User findByEmailAndIsDeleted(String email, Boolean isDeleted);
 
 
 }
