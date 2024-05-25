@@ -2,6 +2,8 @@ package com.ttwticket.backend.domain.issues.dto;
 
 import com.ttwticket.backend.domain.issues.*;
 
+import com.ttwticket.backend.domain.projects.Project;
+import com.ttwticket.backend.domain.users.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,25 +11,29 @@ import lombok.Getter;
 public class IssueRequestDto {
     private String title;
     private String description;
+    private String reporter;
     private Status status;
     private Priority priority;
-    //private String comment;
+    private Integer userId;
 
     @Builder
-    public IssueRequestDto(String title, String description, Status status, Priority priority) {
+    public IssueRequestDto(String title, String description, String reporter, Status status, Priority priority, Integer userId) {
         this.title = title;
         this.description = description;
+        this.reporter = reporter;
         this.status = status;
         this.priority = priority;
-        // this.comment = comment;
+        this.userId = userId;
     }
-    public Issue toEntity() {
+    public Issue toEntity(Project project) {
         return Issue.builder()
                 .title(title)
                 .description(description)
+                .reporter(reporter)
                 .status(status)
                 .priority(priority)
-                //.comment(comment)
+                .userId(userId)
+                .project(project)
                 .build();
     }
 

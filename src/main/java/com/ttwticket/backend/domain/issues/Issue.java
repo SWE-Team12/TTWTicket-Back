@@ -2,6 +2,7 @@ package com.ttwticket.backend.domain.issues;
 
 import com.ttwticket.backend.domain.BaseTimeEntity;
 import com.ttwticket.backend.domain.issues.dto.IssueStatusChangeRequestDto;
+import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.users.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -19,8 +20,6 @@ public class Issue extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int issueId;
 
-    private int projectId;
-
     private int userId;
 
     @Column(nullable = false, length = 30)
@@ -29,36 +28,33 @@ public class Issue extends BaseTimeEntity {
     @Column(nullable = false)
     private String description;
 
-    @CreationTimestamp
     @Column(nullable = false)
-    private Date reportedDate;
+    private String reporter;
 
     @Column(nullable = false, length = 20)
-    private Status status;
-
-    @Column(nullable = false, length = 20)
+    @Enumerated(EnumType.STRING)
     private Priority priority;
+
+    @Column(nullable = false, length = 20)
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     private boolean isOpened;
 
-    @ManyToOne
-    @JoinColumn(name = "reporter", referencedColumnName = "name")
-    private User reporter;
-
-    @ManyToOne
-    @JoinColumn(name = "assignee", referencedColumnName = "name")
-    private User[] assignee;
-
-    @ManyToOne
-    @JoinColumn(name = "fixer", referencedColumnName = "name")
-    private User[] fixer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
 
     @Builder
-    public Issue(String title, String description, Status status, Priority priority) {
+    public Issue(String title, String description, String reporter, Status status, Priority priority, Integer userId, Project project) {
         this.title = title;
         this.description = description;
+        this.reporter = reporter;
         this.status = status;
         this.priority = priority;
+        this.isOpened = true;
+        this.userId = userId;
+        this.project = project;
     }
 
     public void modifyIssue(IssueStatusChangeRequestDto issueStatusChangeRequestDto) {

@@ -10,16 +10,18 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class IssueResponseDto {
+    private Integer issueId;
     private String title;
     private String description;
+    private String reporter;
     private Status status;
     private Priority priority;
-    //private String comment;
 
     @Builder
     public IssueResponseDto(Issue issue) {
         this.title = issue.getTitle();
         this.description = issue.getDescription();
+        this.reporter = issue.getReporter();
         this.status = issue.getStatus();
         this.priority = issue.getPriority();
     }
