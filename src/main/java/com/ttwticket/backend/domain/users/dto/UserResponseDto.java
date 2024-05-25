@@ -13,7 +13,7 @@ public class UserResponseDto {
     private String name;
     private String email;
     private String password;
-    private Role role;
+    //private Role role;
 
     @Builder
     public UserResponseDto(User user) {
@@ -21,6 +21,6 @@ public class UserResponseDto {
         this.name = user.getName();
         this.email = user.getEmail();
         this.password = user.getPassword();
-        this.role = user.getRole();
+        //this.role = user.getRole();
     }
 }

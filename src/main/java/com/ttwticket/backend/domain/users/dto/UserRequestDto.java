@@ -2,6 +2,8 @@ package com.ttwticket.backend.domain.users.dto;
 
 import com.ttwticket.backend.domain.users.Role;
 import com.ttwticket.backend.domain.users.User;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,6 +12,7 @@ public class UserRequestDto {
     private String name;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
@@ -20,7 +23,7 @@ public class UserRequestDto {
         this.role = role;
     }
 
-    public User toEntity() {
+    public User toEntity(String password) {
         return User.builder()
                 .name(name)
                 .email(email)

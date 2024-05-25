@@ -1,7 +1,8 @@
 package com.ttwticket.backend.domain.users;
 
 public enum Role {
+    Admin,
     PL,
-    dev,
-    tester
+    Developer,
+    Tester
 }

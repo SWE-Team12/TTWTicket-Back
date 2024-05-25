@@ -1,6 +1,7 @@
 package com.ttwticket.backend.domain.users;
 
 import com.ttwticket.backend.domain.BaseTimeEntity;
+import com.ttwticket.backend.domain.users.dto.UserRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class User extends BaseTimeEntity {
     private String password;
 
     @Column(nullable = false, length = 20)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(nullable = false)
@@ -38,5 +40,9 @@ public class User extends BaseTimeEntity {
         this.password = password;
         this.role = role;
         this.isDeleted = false;
+    }
+
+    public static User createUser(UserRequestDto userRequestDto, String password) {
+        return new User(userRequestDto.getName(), userRequestDto.getEmail(), password, userRequestDto.getRole());
     }
 }
