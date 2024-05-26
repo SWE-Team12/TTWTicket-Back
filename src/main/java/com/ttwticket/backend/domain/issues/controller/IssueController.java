@@ -3,6 +3,7 @@ package com.ttwticket.backend.domain.issues.controller;
 import com.ttwticket.backend.domain.issues.dto.IssueIdResponseDto;
 import com.ttwticket.backend.domain.issues.dto.IssueRequestDto;
 import com.ttwticket.backend.domain.issues.dto.IssueResponseDto;
+import com.ttwticket.backend.domain.issues.dto.IssueStatusChangeRequestDto;
 import com.ttwticket.backend.domain.issues.service.IssueService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,12 @@ public class IssueController {
     public IssueResponseDto getIssues(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId) {
         return issueService.getIssue(issueId);
     }
+
+    @PatchMapping("/{projectId}/issues/{issueId}")
+    public Integer modify(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId, @RequestBody IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
+        return issueService.modifyIssue(issueId, issueStatusChangeRequestDto);
+    }
+
 //
 //    @GetMapping("/{projectId}/issues/search")
 //    public List<IssueResponseDto> searchIssues(@PathVariable("projectId") Integer projectId,
@@ -54,10 +61,7 @@ public class IssueController {
 //        }
 //    }
 //
-//    @PatchMapping("{issueId}")
-//    public Integer modify(@PathVariable("issueId") Integer issueId, @RequestBody IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
-//        return issueService.modifyIssue(issueId, issueStatusChangeRequestDto);
-//    }
+
 
 
 }

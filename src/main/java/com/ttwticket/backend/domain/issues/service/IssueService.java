@@ -47,11 +47,11 @@ public class IssueService {
                 .build();
     }
 
-//    @Transactional
-//    public Integer modifyIssue(Integer issueId, IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
-//        issueRepository.findByIssueId(issueId).modifyIssue(issueStatusChangeRequestDto);
-//        return issueId;
-//    }
+    @Transactional
+    public Integer modifyIssue(Integer issueId, IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
+        issueRepository.findByIssueId(issueId).modifyIssue(issueStatusChangeRequestDto);
+        return issueId;
+    }
 //
 //
 //    public List<IssueResponseDto> getIssuesByStatus(Integer projectId, Status status) {
