@@ -39,7 +39,7 @@ public class JwtTokenUtil {
     public static String getId(String token, String key) {
         return Jwts.parser()
                 .setSigningKey(key)
-                .parseClaimsJws(token)
+                .parseClaimsJwt(token)
                 .getBody()
                 .get("userId", String.class);
     }
