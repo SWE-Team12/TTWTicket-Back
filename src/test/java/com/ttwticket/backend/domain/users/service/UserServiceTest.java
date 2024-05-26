@@ -114,7 +114,7 @@ class UserServiceTest {
             User user = userRepository.findByUserIdAndIsDeleted(userResponseDto.get(i).getUserId(), false);
             assertEquals("test" + (i+1), userResponseDto.get(i).getName());
             assertEquals("test email" + (i+1), userResponseDto.get(i).getEmail());
-            assertEquals("test password" + (i+1), userResponseDto.get(i).getPassword());
+            assertEquals("test password" + (i+1), userList.get(i).getPassword());
             assertEquals(Role.PL, user.getRole());
         }
 
