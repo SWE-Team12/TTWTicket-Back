@@ -33,13 +33,13 @@ public class IssueController {
     }
 
     @GetMapping("/{projectId}/issues/{issueId}")
-    public IssueResponseDto getIssues(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId) {
-        return issueService.getIssue(issueId);
+    public IssueResponseDto getIssue(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId) {
+        return issueService.getIssue(projectId, issueId);
     }
 
     @PatchMapping("/{projectId}/issues/{issueId}")
     public Integer modify(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId, @RequestBody IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
-        return issueService.modifyIssue(issueId, issueStatusChangeRequestDto);
+        return issueService.modifyIssue(projectId, issueId, issueStatusChangeRequestDto);
     }
 
 //

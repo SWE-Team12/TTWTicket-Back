@@ -41,15 +41,15 @@ public class IssueService {
                 .collect(Collectors.toList());
     }
 
-    public IssueResponseDto getIssue(Integer issueId) {
+    public IssueResponseDto getIssue(Integer projectId, Integer issueId) {
         return IssueResponseDto.builder()
-                .issue(issueRepository.findByIssueId(issueId))
+                .issue(issueRepository.findByProject_ProjectIdAndIssueId(projectId, issueId))
                 .build();
     }
 
     @Transactional
-    public Integer modifyIssue(Integer issueId, IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
-        issueRepository.findByIssueId(issueId).modifyIssue(issueStatusChangeRequestDto);
+    public Integer modifyIssue(Integer projectId, Integer issueId, IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
+        issueRepository.findByProject_ProjectIdAndIssueId(projectId, issueId).modifyIssue(issueStatusChangeRequestDto);
         return issueId;
     }
 //
