@@ -50,7 +50,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String email = JwtTokenUtil.getEmail(extractClaims(token,secretKey));
         User user = userService.findUserByEmail(email);
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(), null);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(), true);
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
@@ -67,4 +67,5 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         Date expiredDate = extractClaims(token, secretKey).getExpiration();
         return expiredDate.before(new Date());
     }
+
 }
