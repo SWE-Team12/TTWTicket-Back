@@ -1,11 +1,15 @@
 package com.ttwticket.backend.domain.projects;
 
 import com.ttwticket.backend.domain.BaseTimeEntity;
+import com.ttwticket.backend.domain.issues.Issue;
 import com.ttwticket.backend.domain.projects.dto.ProjectRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,6 +25,10 @@ public class Project extends BaseTimeEntity{
 
     @Column(nullable = false)
     private String description;
+
+    //추가된 것
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Issue> issues = new ArrayList<>();
 
     @Builder
     public Project(String title, String description) {

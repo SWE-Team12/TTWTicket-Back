@@ -34,18 +34,19 @@ public class IssueService {
         return issueIdResponseDto;
     }
 
+    public List<IssueResponseDto> getAllIssues(Integer projectId) {
+        List<Issue> issues = issueRepository.findByProject_ProjectId(projectId);
+        return issues.stream()
+                .map(issue -> IssueResponseDto.builder().issue(issue).build())
+                .collect(Collectors.toList());
+    }
+
 //    @Transactional
 //    public Integer modifyIssue(Integer issueId, IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
 //        issueRepository.findByIssueId(issueId).modifyIssue(issueStatusChangeRequestDto);
 //        return issueId;
 //    }
 //
-//    public List<IssueResponseDto> getAllIssues(Integer projectId) {
-//        List<Issue> issues = issueRepository.findByProjectId(projectId);
-//        return issues.stream()
-//                .map(issue -> IssueResponseDto.builder().issue(issue).build())
-//                .collect(Collectors.toList());
-//    }
 //
 //    public List<IssueResponseDto> getIssuesByStatus(Integer projectId, Status status) {
 //        List<Issue> issues = issueRepository.findByProjectIdAndStatus(projectId, status);

@@ -2,6 +2,7 @@ package com.ttwticket.backend.domain.issues.controller;
 
 import com.ttwticket.backend.domain.issues.dto.IssueIdResponseDto;
 import com.ttwticket.backend.domain.issues.dto.IssueRequestDto;
+import com.ttwticket.backend.domain.issues.dto.IssueResponseDto;
 import com.ttwticket.backend.domain.issues.service.IssueService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/projects")
@@ -24,10 +26,10 @@ public class IssueController {
         return issueService.createIssue(issueRequestDto, projectId);
     }
 
-//    @GetMapping("/{projectId}/issues")
-//    public List<IssueResponseDto> getAllIssues(@PathVariable("projectId") Integer projectId) {
-//        return issueService.getAllIssues(projectId);
-//    }
+    @GetMapping("/{projectId}/issues")
+    public List<IssueResponseDto> getAllIssues(@PathVariable("projectId") Integer projectId) {
+        return issueService.getAllIssues(projectId);
+    }
 //
 //    @GetMapping("/{projectId}/issues/search")
 //    public List<IssueResponseDto> searchIssues(@PathVariable("projectId") Integer projectId,
