@@ -41,6 +41,12 @@ public class IssueService {
                 .collect(Collectors.toList());
     }
 
+    public IssueResponseDto getIssue(Integer issueId) {
+        return IssueResponseDto.builder()
+                .issue(issueRepository.findByIssueId(issueId))
+                .build();
+    }
+
 //    @Transactional
 //    public Integer modifyIssue(Integer issueId, IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
 //        issueRepository.findByIssueId(issueId).modifyIssue(issueStatusChangeRequestDto);

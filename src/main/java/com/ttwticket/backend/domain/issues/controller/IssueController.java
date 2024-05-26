@@ -30,6 +30,11 @@ public class IssueController {
     public List<IssueResponseDto> getAllIssues(@PathVariable("projectId") Integer projectId) {
         return issueService.getAllIssues(projectId);
     }
+
+    @GetMapping("/{projectId}/issues/{issueId}")
+    public IssueResponseDto getIssues(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId) {
+        return issueService.getIssue(issueId);
+    }
 //
 //    @GetMapping("/{projectId}/issues/search")
 //    public List<IssueResponseDto> searchIssues(@PathVariable("projectId") Integer projectId,

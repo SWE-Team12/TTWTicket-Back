@@ -19,6 +19,7 @@ public class IssueResponseDto {
 
     @Builder
     public IssueResponseDto(Issue issue) {
+        this.issueId = issue.getIssueId();
         this.title = issue.getTitle();
         this.description = issue.getDescription();
         this.reporter = issue.getReporter();
