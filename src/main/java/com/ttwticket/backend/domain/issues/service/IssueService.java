@@ -48,6 +48,21 @@ public class IssueService {
                 .build();
     }
 
+
+//    public List<IssueResponseDto> getAssignedIssues(Integer projectId, Integer userId) {
+//        List<Issue> issues = issueRepository.findByProject_ProjectIdAndUserId(projectId, userId);
+//        return issues.stream()
+//                .map(issue -> IssueResponseDto.builder().issue(issue).build())
+//                .collect(Collectors.toList());
+//    }
+
+    public List<IssueResponseDto> getReportedIssues(Integer projectId, Integer userId) {
+        List<Issue> issues = issueRepository.findByProject_ProjectIdAndUserId(projectId, userId);
+        return issues.stream()
+                .map(issue -> IssueResponseDto.builder().issue(issue).build())
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public Integer modifyIssue(Integer projectId, Integer issueId, IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
         issueRepository.findByProject_ProjectIdAndIssueId(projectId, issueId).modifyIssue(issueStatusChangeRequestDto);
