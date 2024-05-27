@@ -7,9 +7,6 @@ import com.ttwticket.backend.domain.assignee.dto.AssigneeRequestDto;
 import com.ttwticket.backend.domain.assignee.dto.AssigneeResponseDto;
 import com.ttwticket.backend.domain.issues.Issue;
 import com.ttwticket.backend.domain.issues.IssueRepository;
-import com.ttwticket.backend.domain.issues.dto.IssueIdResponseDto;
-import com.ttwticket.backend.domain.issues.dto.IssueResponseDto;
-import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.users.User;
 import com.ttwticket.backend.domain.users.UserRepository;
 import jakarta.transaction.Transactional;
@@ -42,7 +39,10 @@ public class AssigneeService {
     @Transactional
     public List<AssigneeResponseDto> getUsers(Integer issueId) throws SQLException {
         Issue issue = issueValid(issueId);
-        return assigneeRepository.findAssigneeByIssue(issue).stream().map(AssigneeResponseDto::new).collect(Collectors.toList());
+        List<Assignee> assignees = assigneeRepository.findAssigneeByIssue(issue);
+        return assignees.stream()
+                .map(assignee -> AssigneeResponseDto.builder().assignee(assignee).build())
+                .collect(Collectors.toList());
     }
 
 

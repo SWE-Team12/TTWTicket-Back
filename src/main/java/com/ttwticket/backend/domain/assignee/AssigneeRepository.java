@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface AssigneeRepository extends JpaRepository<Assignee, Long> {
+public interface AssigneeRepository extends JpaRepository<Assignee, Integer> {
     List<Assignee> findAssigneeByIssue(Issue issue);
 }
