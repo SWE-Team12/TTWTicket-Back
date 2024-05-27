@@ -21,5 +21,10 @@ public class CommentController {
         return commentService.saveComment(commentRequestDto,issueId);
     }
 
-    
+    @GetMapping("{projectId}/issues/{issueId}/comments")
+    public List<CommentListDto> getAllCommentsByPostId(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId) throws SQLException {
+        return commentService.getAllCommentsByIssueId(issueId);
+    }
+
+
 }

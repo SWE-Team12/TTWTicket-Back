@@ -33,6 +33,11 @@ public class CommentService {
         return new CommentResponseDto(comment, user.getName(), issueId);
     }
 
+    public List<CommentListDto> getAllCommentsByIssueId(Integer issueId) throws SQLException {
+        Issue issue = issueValid(issueId);
+        return commentRepository.findCommentsByIssue(issue).stream().map(CommentListDto::new).collect(Collectors.toList());
+    }
+
 
     public User userValid(Integer userId) {
         return userRepository.findByUserIdAndIsDeleted(userId, false);
