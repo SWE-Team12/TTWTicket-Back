@@ -38,6 +38,15 @@ public class CommentService {
         return commentRepository.findCommentsByIssue(issue).stream().map(CommentListDto::new).collect(Collectors.toList());
     }
 
+    @Transactional
+    public CommentModifyResponseDto modifyComment(CommentModifyRequestDto commentModifyRequest, Integer issueId, Integer commentId) throws SQLException {
+        issueValid(issueId);
+        Comment comment = commentRepository.findCommentByCommentId(commentId);
+
+        comment.modifyComment(commentModifyRequest.getMessage());
+
+        return new CommentModifyResponseDto(commentRepository.saveAndFlush(comment), issueId);
+    }
 
     public User userValid(Integer userId) {
         return userRepository.findByUserIdAndIsDeleted(userId, false);

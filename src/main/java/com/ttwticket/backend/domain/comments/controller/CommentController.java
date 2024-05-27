@@ -26,5 +26,10 @@ public class CommentController {
         return commentService.getAllCommentsByIssueId(issueId);
     }
 
+    @PatchMapping("{projectId}/issues/{issueId}/comments/{commentId}")
+    public CommentModifyResponseDto modify(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId, @PathVariable("commentId") Integer commentId, @Validated @RequestBody CommentModifyRequestDto commentModifyRequest) throws SQLException {
+        return commentService.modifyComment(commentModifyRequest, issueId, commentId);
+    }
+
 
 }
