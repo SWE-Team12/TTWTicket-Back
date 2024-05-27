@@ -37,10 +37,17 @@ public class IssueController {
         return issueService.getIssue(projectId, issueId);
     }
 
+    @GetMapping("/{projectId}/issues/search/{userId}")
+    public List<IssueResponseDto> search(@PathVariable("projectId") Integer projectId, @PathVariable("userId") Integer userId) {
+        return issueService.getSearchableIssues(projectId, userId);
+    }
+
     @PatchMapping("/{projectId}/issues/{issueId}")
     public Integer modify(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId, @RequestBody IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
         return issueService.modifyIssue(projectId, issueId, issueStatusChangeRequestDto);
     }
+
+
 
 //
 //    @GetMapping("/{projectId}/issues/search")

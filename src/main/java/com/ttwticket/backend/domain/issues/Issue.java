@@ -1,6 +1,7 @@
 package com.ttwticket.backend.domain.issues;
 
 import com.ttwticket.backend.domain.BaseTimeEntity;
+import com.ttwticket.backend.domain.assignee.Assignee;
 import com.ttwticket.backend.domain.issues.dto.IssueStatusChangeRequestDto;
 import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.users.User;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -40,6 +42,9 @@ public class Issue extends BaseTimeEntity {
     private Status status;
 
     private boolean isOpened;
+//
+//    @OneToMany(mappedBy = "user")
+//    private List<Assignee> assignees;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
