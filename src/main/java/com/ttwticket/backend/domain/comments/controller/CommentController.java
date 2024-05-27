@@ -31,5 +31,8 @@ public class CommentController {
         return commentService.modifyComment(commentModifyRequest, issueId, commentId);
     }
 
-
+    @DeleteMapping("{projectId}/issues/{issueId}/comments/{commentId}")
+    public void delete(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId, @PathVariable("commentId") Integer commentId) throws SQLException {
+        commentService.deleteComment(issueId, commentId);
+    }
 }

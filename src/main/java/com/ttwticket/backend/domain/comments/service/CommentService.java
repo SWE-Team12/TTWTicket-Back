@@ -48,6 +48,14 @@ public class CommentService {
         return new CommentModifyResponseDto(commentRepository.saveAndFlush(comment), issueId);
     }
 
+    @Transactional
+    public void deleteComment(Integer issueId, Integer commentId) throws SQLException {
+        issueValid(issueId);
+        Comment comment = commentRepository.findCommentByCommentId(commentId);
+
+        commentRepository.delete(comment);
+    }
+
     public User userValid(Integer userId) {
         return userRepository.findByUserIdAndIsDeleted(userId, false);
     }
