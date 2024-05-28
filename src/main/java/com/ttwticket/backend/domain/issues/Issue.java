@@ -1,18 +1,12 @@
 package com.ttwticket.backend.domain.issues;
 
 import com.ttwticket.backend.domain.BaseTimeEntity;
-import com.ttwticket.backend.domain.assignee.Assignee;
 import com.ttwticket.backend.domain.issues.dto.IssueStatusChangeRequestDto;
 import com.ttwticket.backend.domain.projects.Project;
-import com.ttwticket.backend.domain.users.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.util.Date;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor

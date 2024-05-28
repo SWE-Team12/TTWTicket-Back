@@ -1,15 +1,11 @@
 package com.ttwticket.backend.domain.issues.service;
 
-import com.ttwticket.backend.domain.assignee.Assignee;
-import com.ttwticket.backend.domain.assignee.AssigneeRepository;
 import com.ttwticket.backend.domain.issues.Issue;
 import com.ttwticket.backend.domain.issues.IssueRepository;
-import com.ttwticket.backend.domain.issues.Status;
 import com.ttwticket.backend.domain.issues.dto.*;
 import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.projects.ProjectRepository;
 import com.ttwticket.backend.domain.users.Role;
-import com.ttwticket.backend.domain.users.User;
 import com.ttwticket.backend.domain.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

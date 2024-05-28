@@ -3,7 +3,6 @@ package com.ttwticket.backend.domain.issues.dto;
 import com.ttwticket.backend.domain.issues.*;
 
 import com.ttwticket.backend.domain.projects.Project;
-import com.ttwticket.backend.domain.users.User;
 import lombok.Builder;
 import lombok.Getter;
 
