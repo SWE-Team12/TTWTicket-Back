@@ -1,6 +1,7 @@
 package com.ttwticket.backend.domain.users;
 
 import com.ttwticket.backend.domain.BaseTimeEntity;
+import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.users.dto.UserRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -16,6 +17,10 @@ public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
+
+    @ManyToOne
+    @JoinColumn(name = "projectId", nullable = true)
+    private Project project;
 
     @Column(nullable = false, length = 10)
     private String name;

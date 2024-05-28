@@ -38,17 +38,17 @@ public class IssueService {
         return issueIdResponseDto;
     }
 
+    public IssueResponseDto getIssue(Integer projectId, Integer issueId) {
+        return IssueResponseDto.builder()
+                .issue(issueRepository.findByProject_ProjectIdAndIssueId(projectId, issueId))
+                .build();
+    }
+
     public List<IssueResponseDto> getAllIssues(Integer projectId) {
         List<Issue> issues = issueRepository.findByProject_ProjectId(projectId);
         return issues.stream()
                 .map(issue -> IssueResponseDto.builder().issue(issue).build())
                 .collect(Collectors.toList());
-    }
-
-    public IssueResponseDto getIssue(Integer projectId, Integer issueId) {
-        return IssueResponseDto.builder()
-                .issue(issueRepository.findByProject_ProjectIdAndIssueId(projectId, issueId))
-                .build();
     }
 
     public List<IssueResponseDto> getAssignedIssues(Integer projectId, Integer userId) {
@@ -107,26 +107,9 @@ public class IssueService {
         issueRepository.findByProject_ProjectIdAndIssueId(projectId, issueId).modifyIssue(issueStatusChangeRequestDto);
         return issueId;
     }
-//
-//
-//    public List<IssueResponseDto> getIssuesByStatus(Integer projectId, Status status) {
-//        List<Issue> issues = issueRepository.findByProjectIdAndStatus(projectId, status);
-//        return issues.stream()
-//                .map(issue -> IssueResponseDto.builder().issue(issue).build())
-//                .collect(Collectors.toList());
-//    }
-//
-//
-//    public List<IssueResponseDto> getIssuesByUser(Integer projectId, User user) {
-//        List<Issue> issues = issueRepository.findByProjectIdAndFixer(projectId, user);
-//        return issues.stream()
-//                .map(issue -> IssueResponseDto.builder().issue(issue).build())
-//                .collect(Collectors.toList());
-//    }
 
     public Project projectValid(Integer projectId) {
         return projectRepository.findByProjectId(projectId);
     }
-
 
 }

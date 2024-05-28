@@ -22,6 +22,7 @@ public class Issue extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int issueId;
 
+    @Column
     private int userId;
 
     @Column(nullable = false, length = 30)
@@ -42,9 +43,6 @@ public class Issue extends BaseTimeEntity {
     private Status status;
 
     private boolean isOpened;
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<Assignee> assignees;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)

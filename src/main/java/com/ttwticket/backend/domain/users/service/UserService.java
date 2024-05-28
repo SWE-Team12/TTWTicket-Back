@@ -27,7 +27,7 @@ public class UserService {
     private String secretKey;
 
     @Transactional
-    public UserIdResponseDto registerUser(UserRequestDto userRequestDto) throws SQLException {
+    public UserIdResponseDto registerUser(UserRequestDto userRequestDto)  {
         String encodedPassword = encoder.encode(userRequestDto.getPassword());
 
         UserIdResponseDto userIdResponseDto = UserIdResponseDto.builder()
