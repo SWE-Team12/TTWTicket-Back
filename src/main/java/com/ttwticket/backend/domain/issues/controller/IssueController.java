@@ -37,6 +37,11 @@ public class IssueController {
         return issueService.getIssue(projectId, issueId);
     }
 
+    @GetMapping(("/{projectId}/issues/reported/{userId}"))
+    public List<IssueResponseDto> getReportedIssues(@PathVariable("projectId") Integer projectId, @PathVariable("userId") Integer userId) {
+        return issueService.getReportedIssues(projectId, userId);
+    }
+
     @PatchMapping("/{projectId}/issues/{issueId}")
     public Integer modify(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId, @RequestBody IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
         return issueService.modifyIssue(projectId, issueId, issueStatusChangeRequestDto);

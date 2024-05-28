@@ -1,6 +1,7 @@
 package com.ttwticket.backend.domain.users;
 
 import com.ttwticket.backend.domain.BaseTimeEntity;
+import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.users.dto.UserRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -32,6 +33,10 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false)
     private Boolean isDeleted;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
 
     @Builder
     public User(String name, String email, String password, Role role) {

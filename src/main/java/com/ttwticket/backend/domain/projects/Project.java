@@ -3,6 +3,7 @@ package com.ttwticket.backend.domain.projects;
 import com.ttwticket.backend.domain.BaseTimeEntity;
 import com.ttwticket.backend.domain.issues.Issue;
 import com.ttwticket.backend.domain.projects.dto.ProjectRequestDto;
+import com.ttwticket.backend.domain.users.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +30,9 @@ public class Project extends BaseTimeEntity{
     //추가된 것
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Issue> issues = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<User> users = new ArrayList<>();
 
     @Builder
     public Project(String title, String description) {
