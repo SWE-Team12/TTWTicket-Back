@@ -1,4 +1,4 @@
-package com.ttwticket.backend.domain.fixer;
+package com.ttwticket.backend.domain.fixers;
 
 import com.ttwticket.backend.domain.issues.Issue;
 import org.springframework.data.jpa.repository.JpaRepository;

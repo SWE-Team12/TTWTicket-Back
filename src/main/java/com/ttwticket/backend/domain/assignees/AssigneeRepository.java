@@ -1,4 +1,4 @@
-package com.ttwticket.backend.domain.assignee;
+package com.ttwticket.backend.domain.assignees;
 
 import com.ttwticket.backend.domain.issues.Issue;
 import org.springframework.data.jpa.repository.JpaRepository;

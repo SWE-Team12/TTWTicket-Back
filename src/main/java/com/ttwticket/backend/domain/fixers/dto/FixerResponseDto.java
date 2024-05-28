@@ -1,6 +1,6 @@
-package com.ttwticket.backend.domain.fixer.dto;
+package com.ttwticket.backend.domain.fixers.dto;
 
-import com.ttwticket.backend.domain.fixer.Fixer;
+import com.ttwticket.backend.domain.fixers.Fixer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

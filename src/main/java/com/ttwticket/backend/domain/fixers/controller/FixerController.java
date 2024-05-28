@@ -1,8 +1,8 @@
-package com.ttwticket.backend.domain.fixer.controller;
+package com.ttwticket.backend.domain.fixers.controller;
 
-import com.ttwticket.backend.domain.fixer.dto.FixerRequestDto;
-import com.ttwticket.backend.domain.fixer.dto.FixerResponseDto;
-import com.ttwticket.backend.domain.fixer.service.FixerService;
+import com.ttwticket.backend.domain.fixers.dto.FixerRequestDto;
+import com.ttwticket.backend.domain.fixers.dto.FixerResponseDto;
+import com.ttwticket.backend.domain.fixers.service.FixerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

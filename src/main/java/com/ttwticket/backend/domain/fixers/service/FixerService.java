@@ -1,9 +1,9 @@
-package com.ttwticket.backend.domain.fixer.service;
+package com.ttwticket.backend.domain.fixers.service;
 
-import com.ttwticket.backend.domain.fixer.Fixer;
-import com.ttwticket.backend.domain.fixer.FixerRepository;
-import com.ttwticket.backend.domain.fixer.dto.FixerRequestDto;
-import com.ttwticket.backend.domain.fixer.dto.FixerResponseDto;
+import com.ttwticket.backend.domain.fixers.Fixer;
+import com.ttwticket.backend.domain.fixers.FixerRepository;
+import com.ttwticket.backend.domain.fixers.dto.FixerRequestDto;
+import com.ttwticket.backend.domain.fixers.dto.FixerResponseDto;
 import com.ttwticket.backend.domain.issues.Issue;
 import com.ttwticket.backend.domain.issues.IssueRepository;
 import com.ttwticket.backend.domain.users.User;
