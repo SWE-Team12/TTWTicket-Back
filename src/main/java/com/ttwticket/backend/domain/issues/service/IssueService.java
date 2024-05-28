@@ -5,10 +5,7 @@ import com.ttwticket.backend.domain.assignee.AssigneeRepository;
 import com.ttwticket.backend.domain.issues.Issue;
 import com.ttwticket.backend.domain.issues.IssueRepository;
 import com.ttwticket.backend.domain.issues.Status;
-import com.ttwticket.backend.domain.issues.dto.IssueIdResponseDto;
-import com.ttwticket.backend.domain.issues.dto.IssueRequestDto;
-import com.ttwticket.backend.domain.issues.dto.IssueResponseDto;
-import com.ttwticket.backend.domain.issues.dto.IssueStatusChangeRequestDto;
+import com.ttwticket.backend.domain.issues.dto.*;
 import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.projects.ProjectRepository;
 import com.ttwticket.backend.domain.users.Role;
@@ -30,10 +27,11 @@ public class IssueService {
     private final AssigneeRepository assigneeRepository;
 
     @Transactional
-    public IssueIdResponseDto createIssue(IssueRequestDto issueRequestDto, Integer projectId) {
+    public IssueIdResponseDto createIssue(IssueCreateRequestDto issueCreateRequestDto, Integer projectId) {
         Project project = projectValid(projectId);
+        String reporter = userRepository.findByUserIdAndIsDeleted(issueCreateRequestDto.getUserId(),false).getName();
         IssueIdResponseDto issueIdResponseDto = IssueIdResponseDto.builder()
-                .issueId(issueRepository.save(issueRequestDto.toEntity(project)).getIssueId())
+                .issueId(issueRepository.save(issueCreateRequestDto.toEntity(project, reporter)).getIssueId())
                 .build();
         return issueIdResponseDto;
     }
@@ -44,7 +42,7 @@ public class IssueService {
                 .build();
     }
 
-    public List<IssueResponseDto> getAllIssues(Integer projectId) {
+    public List<IssueResponseDto> getProjectIssues(Integer projectId) {
         List<Issue> issues = issueRepository.findByProject_ProjectId(projectId);
         return issues.stream()
                 .map(issue -> IssueResponseDto.builder().issue(issue).build())
@@ -83,11 +81,11 @@ public class IssueService {
 
         switch (role) {
             case Admin:
-                issues = getAllIssues(projectId);
+                issues = getProjectIssues(projectId);
                 break;
 
             case PL:
-                issues = getAllIssues(projectId);
+                issues = getProjectIssues(projectId);
                 break;
 
             case Developer:
