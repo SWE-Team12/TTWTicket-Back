@@ -1,14 +1,10 @@
-package com.ttwticket.backend.domain.issues.service;
+package com.ttwticket.backend.domain.issues;
 
-import com.ttwticket.backend.domain.issues.Issue;
-import com.ttwticket.backend.domain.issues.IssueRepository;
-import com.ttwticket.backend.domain.issues.Priority;
-import com.ttwticket.backend.domain.issues.Status;
 import com.ttwticket.backend.domain.issues.dto.IssueIdResponseDto;
 import com.ttwticket.backend.domain.issues.dto.IssueRequestDto;
 import com.ttwticket.backend.domain.issues.dto.IssueResponseDto;
 import com.ttwticket.backend.domain.issues.dto.IssueStatusChangeRequestDto;
-import com.ttwticket.backend.domain.projects.Project;
+import com.ttwticket.backend.domain.issues.service.IssueService;
 import com.ttwticket.backend.domain.projects.ProjectRepository;
 import com.ttwticket.backend.domain.projects.dto.ProjectIdResponseDto;
 import com.ttwticket.backend.domain.projects.dto.ProjectRequestDto;
@@ -54,9 +50,6 @@ class IssueServiceTest {
                 .build();
 
         projectIdResponseDto = projectService.createProject(projectRequestDto);
-
-
-
 
     }
 
