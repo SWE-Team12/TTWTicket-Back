@@ -54,16 +54,6 @@ public class User extends BaseTimeEntity {
         this.isDeleted = false;
     }
 
-    @Builder
-    public User(Integer projectId, String name, String email, String password, Role role) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.isDeleted = false;
-        this.projectId = projectId;
-    }
-
     public static User createUser(UserRequestDto userRequestDto, String password) {
         return new User(userRequestDto.getName(), userRequestDto.getEmail(), password, userRequestDto.getRole());
     }

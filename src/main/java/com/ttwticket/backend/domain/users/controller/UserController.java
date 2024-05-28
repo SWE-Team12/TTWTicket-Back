@@ -34,8 +34,8 @@ public class UserController {
         return userService.login(userLoginRequestDto);
     }
 
-    @GetMapping("")
-    public List<UserResponseDto> getAllUsers() {
-        return userService.getAllUsers();
+    @GetMapping("/{projectId}")
+    public List<UserResponseDto> getAllUsers(@PathVariable("projectId") Integer projectId) {
+        return userService.getAllUsers(projectId);
     }
 }

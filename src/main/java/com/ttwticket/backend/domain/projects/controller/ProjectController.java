@@ -23,10 +23,10 @@ public class ProjectController {
 //        return projectService.createProject(projectRequestDto);
 //    }
 
-    @PatchMapping("{projectId}")
-    public Integer modify(@PathVariable("projectId") Integer projectId, @RequestBody ProjectRequestDto projectRequestDto) {
-        return projectService.modifyProject(projectId, projectRequestDto);
-    }
+//    @PatchMapping("{projectId}")
+//    public Integer modify(@PathVariable("projectId") Integer projectId, @RequestBody ProjectRequestDto projectRequestDto) {
+//        return projectService.modifyProject(projectId, projectRequestDto);
+//    }
 
     @GetMapping("{projectId}")
     public ProjectResponseDto getProject(@PathVariable("projectId") Integer projectId) {

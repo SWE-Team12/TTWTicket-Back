@@ -49,8 +49,8 @@ public class UserService {
         return new UserLoginResponseDto(JwtTokenUtil.createToken(requestEmail, found.getUserId(), found.getName(), secretKey));
     }
 
-    public List<UserResponseDto> getAllUsers() {
-        return userRepository.findAll().stream()
+    public List<UserResponseDto> getAllUsers(Integer projectId) {
+        return userRepository.findByProjectId(projectId).stream()
                 .map(UserResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -62,5 +62,4 @@ public class UserService {
     public User findUserByEmail(String email) {
         return userRepository.findByEmailAndIsDeleted(email, false);
     }
-
 }

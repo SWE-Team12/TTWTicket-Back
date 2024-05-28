@@ -27,11 +27,11 @@ public class ProjectService {
         return projectIdResponseDto;
     }
 
-    @Transactional
-    public Integer modifyProject(Integer projectId, ProjectRequestDto projectRequestDto) {
-        projectRepository.findByProjectId(projectId).modifyProject(projectRequestDto);
-        return projectId;
-    }
+//    @Transactional
+//    public Integer modifyProject(Integer projectId, ProjectRequestDto projectRequestDto) {
+//        projectRepository.findByProjectId(projectId).modifyProject(projectRequestDto);
+//        return projectId;
+//    }
 
     public ProjectResponseDto getProject(Integer projectId) {
         return ProjectResponseDto.builder()
