@@ -1,8 +1,8 @@
-package com.ttwticket.backend.domain.assignee.controller;
+package com.ttwticket.backend.domain.assignees.controller;
 
-import com.ttwticket.backend.domain.assignee.dto.AssigneeRequestDto;
-import com.ttwticket.backend.domain.assignee.dto.AssigneeResponseDto;
-import com.ttwticket.backend.domain.assignee.service.AssigneeService;
+import com.ttwticket.backend.domain.assignees.dto.AssigneeRequestDto;
+import com.ttwticket.backend.domain.assignees.dto.AssigneeResponseDto;
+import com.ttwticket.backend.domain.assignees.service.AssigneeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

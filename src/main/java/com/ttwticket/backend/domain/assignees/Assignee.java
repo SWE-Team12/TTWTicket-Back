@@ -1,9 +1,6 @@
-package com.ttwticket.backend.domain.assignee;
+package com.ttwticket.backend.domain.assignees;
 
 import com.ttwticket.backend.domain.issues.Issue;
-import com.ttwticket.backend.domain.issues.Priority;
-import com.ttwticket.backend.domain.issues.Status;
-import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.users.User;
 import jakarta.persistence.*;
 import lombok.Builder;

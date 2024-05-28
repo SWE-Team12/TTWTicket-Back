@@ -1,6 +1,6 @@
-package com.ttwticket.backend.domain.assignee.dto;
+package com.ttwticket.backend.domain.assignees.dto;
 
-import com.ttwticket.backend.domain.assignee.Assignee;
+import com.ttwticket.backend.domain.assignees.Assignee;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

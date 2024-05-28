@@ -1,15 +1,12 @@
-package com.ttwticket.backend.domain.assignee.service;
+package com.ttwticket.backend.domain.assignees.service;
 
 
-import com.ttwticket.backend.domain.assignee.Assignee;
-import com.ttwticket.backend.domain.assignee.AssigneeRepository;
-import com.ttwticket.backend.domain.assignee.dto.AssigneeRequestDto;
-import com.ttwticket.backend.domain.assignee.dto.AssigneeResponseDto;
+import com.ttwticket.backend.domain.assignees.Assignee;
+import com.ttwticket.backend.domain.assignees.AssigneeRepository;
+import com.ttwticket.backend.domain.assignees.dto.AssigneeRequestDto;
+import com.ttwticket.backend.domain.assignees.dto.AssigneeResponseDto;
 import com.ttwticket.backend.domain.issues.Issue;
 import com.ttwticket.backend.domain.issues.IssueRepository;
-import com.ttwticket.backend.domain.issues.dto.IssueIdResponseDto;
-import com.ttwticket.backend.domain.issues.dto.IssueResponseDto;
-import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.users.User;
 import com.ttwticket.backend.domain.users.UserRepository;
 import jakarta.transaction.Transactional;
