@@ -7,28 +7,20 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class IssueRequestDto {
+public class IssueCreateRequestDto {
     private String title;
     private String description;
-    //private String reporter;
-    //private Status status;
     private Priority priority;
     private Integer userId;
 
-//    public void setReporter(String reporter) {
-//        this.reporter = reporter;
-//    }
-
     @Builder
-    public IssueRequestDto(String title, String description, String reporter, Status status, Priority priority, Integer userId) {
+    public IssueCreateRequestDto(String title, String description, Priority priority, Integer userId) {
         this.title = title;
         this.description = description;
-        //this.reporter = reporter;
-        //this.status = status;
         this.priority = priority;
         this.userId = userId;
     }
-    public Issue toEntity(String reporter, Project project) {
+    public Issue toEntity(Project project, String reporter) {
         return Issue.builder()
                 .title(title)
                 .description(description)

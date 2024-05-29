@@ -49,8 +49,8 @@ public class IssueService {
         List<Issue> issues = issueRepository.findByProject_ProjectId(projectId);
         List<Assignee> assignees = assigneeRepository.findAssigneeByUser(userRepository.findByUserIdAndIsDeleted(userId, false));
         List<Integer> issueIds = assignees.stream()
-                .map(Assignee::getIssue)
-                .map(Issue::getIssueId).collect(Collectors.toList());
+                        .map(Assignee::getIssue)
+                        .map(Issue::getIssueId).collect(Collectors.toList());
 
         issues.stream()
                 .filter(issue->issueIds.contains(issue.getIssueId()))

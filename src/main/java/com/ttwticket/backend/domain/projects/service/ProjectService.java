@@ -1,5 +1,6 @@
 package com.ttwticket.backend.domain.projects.service;
 
+import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.projects.ProjectRepository;
 import com.ttwticket.backend.domain.projects.dto.ProjectIdResponseDto;
 import com.ttwticket.backend.domain.projects.dto.ProjectRequestDto;
@@ -26,11 +27,11 @@ public class ProjectService {
         return projectIdResponseDto;
     }
 
-    @Transactional
-    public Integer modifyProject(Integer projectId, ProjectRequestDto projectRequestDto) {
-        projectRepository.findByProjectId(projectId).modifyProject(projectRequestDto);
-        return projectId;
-    }
+//    @Transactional
+//    public Integer modifyProject(Integer projectId, ProjectRequestDto projectRequestDto) {
+//        projectRepository.findByProjectId(projectId).modifyProject(projectRequestDto);
+//        return projectId;
+//    }
 
     public ProjectResponseDto getProject(Integer projectId) {
         return ProjectResponseDto.builder()

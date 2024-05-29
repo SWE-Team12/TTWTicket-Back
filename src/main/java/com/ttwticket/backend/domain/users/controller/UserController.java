@@ -24,18 +24,18 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/register")
-    public UserIdResponseDto register(@RequestBody UserRequestDto userRequestDto) throws SQLException {
-        return userService.registerUser(userRequestDto);
-    }
+//    @PostMapping("/register")
+//    public UserIdResponseDto register(@RequestBody UserRequestDto userRequestDto) throws SQLException {
+//        return userService.registerUser(userRequestDto);
+//    }
     
     @PostMapping("/login")
     public UserLoginResponseDto login(@Validated @RequestBody UserLoginRequestDto userLoginRequestDto, HttpServletRequest request) throws SQLException {
         return userService.login(userLoginRequestDto);
     }
 
-    @GetMapping("")
-    public List<UserResponseDto> getAllUsers() {
-        return userService.getAllUsers();
+    @GetMapping("/{projectId}")
+    public List<UserResponseDto> getAllUsers(@PathVariable("projectId") Integer projectId) {
+        return userService.getAllUsers(projectId);
     }
 }
