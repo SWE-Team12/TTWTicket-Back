@@ -13,6 +13,7 @@ public class UserResponseDto {
     private String name;
     private String email;
     private Role role;
+    private Integer projectId;
 
     @Builder
     public UserResponseDto(User user) {
@@ -20,5 +21,6 @@ public class UserResponseDto {
         this.name = user.getName();
         this.email = user.getEmail();
         this.role = user.getRole();
+        this.projectId = user.getProject().getProjectId();
     }
 }

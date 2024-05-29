@@ -1,5 +1,6 @@
 package com.ttwticket.backend.domain.users;
 
+import com.ttwticket.backend.domain.projects.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByEmailAndIsDeleted(String email, Boolean isDeleted);
 
-    List<User> findByProjectId(Integer projectId);
+    List<User> findUsersByProject(Project project);
 
 
 }

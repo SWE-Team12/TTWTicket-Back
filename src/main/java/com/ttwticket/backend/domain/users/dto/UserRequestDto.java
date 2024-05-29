@@ -1,5 +1,6 @@
 package com.ttwticket.backend.domain.users.dto;
 
+import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.users.Role;
 import com.ttwticket.backend.domain.users.User;
 import jakarta.persistence.EnumType;
@@ -14,6 +15,7 @@ public class UserRequestDto {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    private Integer projectId;
 
     @Builder
     public UserRequestDto(String name, String email, String password, Role role) {
@@ -23,12 +25,13 @@ public class UserRequestDto {
         this.role = role;
     }
 
-    public User toEntity(String password) {
+    public User toEntity(String password, Project project) {
         return User.builder()
                 .name(name)
                 .email(email)
                 .password(password)
                 .role(role)
+                .project(project)
                 .build();
     }
 }

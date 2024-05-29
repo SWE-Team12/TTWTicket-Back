@@ -18,12 +18,12 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "projectId", nullable = true)
-//    private Project project;
+    @ManyToOne
+    @JoinColumn(name = "projectId", nullable = true)
+    private Project project;
 
-    @Column
-    private Integer projectId;
+//    @Column
+//    private Integer projectId;
 
     @Column(nullable = false, length = 10)
     private String name;
@@ -41,21 +41,22 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean isDeleted;
 
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
-    }
+//    public void setProjectId(Integer projectId) {
+//        this.projectId = projectId;
+//    }
 
     @Builder
-    public User(String name, String email, String password, Role role) {
+    public User(String name, String email, String password, Role role, Project project) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
         this.isDeleted = false;
+        this.project = project;
     }
 
-    public static User createUser(UserRequestDto userRequestDto, String password) {
-        return new User(userRequestDto.getName(), userRequestDto.getEmail(), password, userRequestDto.getRole());
+    public static User createUser(UserRequestDto userRequestDto, String password, Project project) {
+        return new User(userRequestDto.getName(), userRequestDto.getEmail(), password, userRequestDto.getRole(), project);
     }
 }
 
