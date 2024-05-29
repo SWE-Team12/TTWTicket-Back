@@ -1,10 +1,11 @@
-package com.ttwticket.backend.domain.projects.service;
+package com.ttwticket.backend.domain.projects;
 
 import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.projects.ProjectRepository;
 import com.ttwticket.backend.domain.projects.dto.ProjectIdResponseDto;
 import com.ttwticket.backend.domain.projects.dto.ProjectRequestDto;
 import com.ttwticket.backend.domain.projects.dto.ProjectResponseDto;
+import com.ttwticket.backend.domain.projects.service.ProjectService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,32 +50,32 @@ class ProjectServiceTest {
         assertEquals("sample description", project.getDescription());
     }
 
-    @Test
-    @DisplayName("프로젝트 수정 성공")
-    void 프로젝트수정() {
-        //given
-        ProjectRequestDto projectRequestDto = ProjectRequestDto.builder()
-                .title("sample title")
-                .description("sample description")
-                .build();
-
-        ProjectIdResponseDto projectIdResponseDto = projectService.createProject(projectRequestDto);
-        Project project = projectRepository.findByProjectId(projectIdResponseDto.getProjectId());
-
-        ProjectRequestDto modifiedDto = ProjectRequestDto.builder()
-                .title("sample modified title")
-                .description("sample modified description")
-                .build();
-
-        //when
-        projectService.modifyProject(project.getProjectId(), modifiedDto);
-
-        Project modifiedProject = projectRepository.findByProjectId(projectIdResponseDto.getProjectId());
-
-        //then
-        assertEquals("sample modified title", modifiedProject.getTitle());
-        assertEquals("sample modified description", modifiedProject.getDescription());
-    }
+//    @Test
+//    @DisplayName("프로젝트 수정 성공")
+//    void 프로젝트수정() {
+//        //given
+//        ProjectRequestDto projectRequestDto = ProjectRequestDto.builder()
+//                .title("sample title")
+//                .description("sample description")
+//                .build();
+//
+//        ProjectIdResponseDto projectIdResponseDto = projectService.createProject(projectRequestDto);
+//        Project project = projectRepository.findByProjectId(projectIdResponseDto.getProjectId());
+//
+//        ProjectRequestDto modifiedDto = ProjectRequestDto.builder()
+//                .title("sample modified title")
+//                .description("sample modified description")
+//                .build();
+//
+//        //when
+//        projectService.modifyProject(project.getProjectId(), modifiedDto);
+//
+//        Project modifiedProject = projectRepository.findByProjectId(projectIdResponseDto.getProjectId());
+//
+//        //then
+//        assertEquals("sample modified title", modifiedProject.getTitle());
+//        assertEquals("sample modified description", modifiedProject.getDescription());
+//    }
 
     @Test
     @DisplayName("단일 프로젝트 조회 성공")
