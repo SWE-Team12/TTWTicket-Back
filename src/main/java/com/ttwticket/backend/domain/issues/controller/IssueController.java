@@ -1,17 +1,12 @@
 package com.ttwticket.backend.domain.issues.controller;
 
-import com.ttwticket.backend.domain.issues.dto.IssueIdResponseDto;
-import com.ttwticket.backend.domain.issues.dto.IssueRequestDto;
-import com.ttwticket.backend.domain.issues.dto.IssueResponseDto;
-import com.ttwticket.backend.domain.issues.dto.IssueStatusChangeRequestDto;
+import com.ttwticket.backend.domain.issues.dto.*;
 import com.ttwticket.backend.domain.issues.service.IssueService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -23,13 +18,13 @@ public class IssueController {
     private final IssueService issueService;
 
     @PostMapping("/{projectId}/issues")
-    public IssueIdResponseDto create(@PathVariable("projectId") Integer projectId, @Validated @RequestBody IssueRequestDto issueRequestDto) throws SQLException {
-        return issueService.createIssue(issueRequestDto, projectId);
+    public IssueIdResponseDto create(@PathVariable("projectId") Integer projectId, @Validated @RequestBody IssueCreateRequestDto issueCreateRequestDto) {
+        return issueService.createIssue(issueCreateRequestDto, projectId);
     }
 
     @GetMapping("/{projectId}/issues")
     public List<IssueResponseDto> getAllIssues(@PathVariable("projectId") Integer projectId) {
-        return issueService.getAllIssues(projectId);
+        return issueService.getProjectIssues(projectId);
     }
 
     @GetMapping("/{projectId}/issues/{issueId}")
@@ -37,15 +32,17 @@ public class IssueController {
         return issueService.getIssue(projectId, issueId);
     }
 
-    @GetMapping(("/{projectId}/issues/reported/{userId}"))
-    public List<IssueResponseDto> getReportedIssues(@PathVariable("projectId") Integer projectId, @PathVariable("userId") Integer userId) {
-        return issueService.getReportedIssues(projectId, userId);
+    @GetMapping("/{projectId}/issues/search/{userId}")
+    public List<IssueResponseDto> search(@PathVariable("projectId") Integer projectId, @PathVariable("userId") Integer userId) {
+        return issueService.getSearchableIssues(projectId, userId);
     }
 
     @PatchMapping("/{projectId}/issues/{issueId}")
     public Integer modify(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId, @RequestBody IssueStatusChangeRequestDto issueStatusChangeRequestDto) {
         return issueService.modifyIssue(projectId, issueId, issueStatusChangeRequestDto);
     }
+
+
 
 //
 //    @GetMapping("/{projectId}/issues/search")
@@ -70,3 +67,4 @@ public class IssueController {
 
 
 }
+

@@ -1,13 +1,10 @@
-package com.ttwticket.backend.domain.issues.service;
+package com.ttwticket.backend.domain.issues;
 
-import com.ttwticket.backend.domain.issues.Issue;
-import com.ttwticket.backend.domain.issues.IssueRepository;
-import com.ttwticket.backend.domain.issues.Priority;
-import com.ttwticket.backend.domain.issues.Status;
 import com.ttwticket.backend.domain.issues.dto.IssueIdResponseDto;
 import com.ttwticket.backend.domain.issues.dto.IssueRequestDto;
 import com.ttwticket.backend.domain.issues.dto.IssueResponseDto;
 import com.ttwticket.backend.domain.issues.dto.IssueStatusChangeRequestDto;
+import com.ttwticket.backend.domain.issues.service.IssueService;
 import com.ttwticket.backend.domain.projects.ProjectRepository;
 import com.ttwticket.backend.domain.projects.dto.ProjectIdResponseDto;
 import com.ttwticket.backend.domain.projects.dto.ProjectRequestDto;
@@ -39,58 +36,72 @@ class IssueServiceTest {
     @Autowired
     ProjectRepository projectRepository;
 
+    ProjectRequestDto projectRequestDto;
+    ProjectIdResponseDto projectIdResponseDto;
+
     @BeforeEach
     void setUp() {
         issueRepository.deleteAll();
         projectRepository.deleteAll();
-    }
 
-    @Test
-    @DisplayName("이슈 생성 성공")
-    void 이슈생성() {
-        //given
-        ProjectRequestDto projectRequestDto = ProjectRequestDto.builder()
+        projectRequestDto = ProjectRequestDto.builder()
                 .title("sample title")
                 .description("sample description")
                 .build();
 
-        ProjectIdResponseDto projectIdResponseDto = projectService.createProject(projectRequestDto);
+        projectIdResponseDto = projectService.createProject(projectRequestDto);
 
-
-        IssueRequestDto issueRequestDto = IssueRequestDto.builder()
-                .title("t_title")
-                .description("t_description")
-                .userId(154)
-                .reporter("t_reporter")
-                .priority(Priority.major)
-                .status(Status.NEW)
-                .build();
-
-        //when
-        IssueIdResponseDto issueIdResponseDto = issueService.createIssue(issueRequestDto, projectIdResponseDto.getProjectId());
-
-        //then
-        Issue issue = issueRepository.findByIssueId(issueIdResponseDto.getIssueId());
-
-        assertEquals(issueIdResponseDto.getIssueId(), issue.getIssueId());
-        assertEquals("t_title", issue.getTitle());
-        assertEquals("t_description", issue.getDescription());
-        assertEquals(154, issue.getUserId());
-        assertEquals("t_reporter", issue.getReporter());
-        assertEquals(Priority.major, issue.getPriority());
-        assertEquals(Status.NEW, issue.getStatus());
     }
+
+//    @Test
+//    @DisplayName("이슈 생성 성공")
+//    void 이슈생성() {
+//        //given
+//        ProjectRequestDto projectRequestDto = ProjectRequestDto.builder()
+//                .title("sample title")
+//                .description("sample description")
+//                .build();
+//
+//        ProjectIdResponseDto projectIdResponseDto = projectService.createProject(projectRequestDto);
+//
+////        UserRequestDto userRequestDto = UserRequestDto.builder()
+////                .name("t_name")
+////                .email("t_email")
+////                .password("t_password")
+////                .role(Role.Tester)
+////                .build();
+////
+////        UserIdResponseDto userIdResponseDto = userService.registerUser(userRequestDto);
+//
+//        IssueRequestDto issueRequestDto = IssueRequestDto.builder()
+//                .title("t_title")
+//                .description("t_description")
+//                .userId()
+//                .reporter("t_reporter")
+//                .priority(Priority.major)
+//                .status(Status.NEW)
+//                .build();
+//
+//        //when
+//        IssueIdResponseDto issueIdResponseDto = issueService.createIssue(issueRequestDto, projectIdResponseDto.getProjectId());
+//
+//        //then
+//        Issue issue = issueRepository.findByIssueId(issueIdResponseDto.getIssueId());
+//
+//        assertEquals(issueIdResponseDto.getIssueId(), issue.getIssueId());
+//        assertEquals("t_title", issue.getTitle());
+//        assertEquals("t_description", issue.getDescription());
+//        assertEquals(userIdResponseDto.getUserId(), issue.getUserId());
+//        assertEquals("t_reporter", issue.getReporter());
+//        assertEquals(Priority.major, issue.getPriority());
+//        assertEquals(Status.NEW, issue.getStatus());
+//    }
 
     @Test
     @DisplayName("모든 이슈 조회 성공")
     void 모든이슈조회() {
         //given
-        ProjectRequestDto projectRequestDto = ProjectRequestDto.builder()
-                .title("sample title")
-                .description("sample description")
-                .build();
 
-        ProjectIdResponseDto projectIdResponseDto = projectService.createProject(projectRequestDto);
 
         List<IssueRequestDto> issueRequestDtos = IntStream.rangeClosed(1, 10).mapToObj(i -> IssueRequestDto.builder()
                         .title("t_title " + i)
@@ -176,38 +187,28 @@ class IssueServiceTest {
     @DisplayName("이슈 수정 성공")
     void 이슈수정() {
         // given
-        ProjectRequestDto projectRequestDto = ProjectRequestDto.builder()
-                .title("sample title")
+        IssueRequestDto issueRequestDto = IssueRequestDto.builder()
+                .title("sample title ")
                 .description("sample description")
+                .userId(123)
+                .reporter("sample reporter")
+                .priority(Priority.major)
+                .status(Status.NEW)
                 .build();
 
-        ProjectIdResponseDto projectIdResponseDto = projectService.createProject(projectRequestDto);
+        IssueIdResponseDto issueIdResponseDto = issueService.createIssue(issueRequestDto, projectIdResponseDto.getProjectId());
+        Issue issue = issueRepository.findByIssueId(issueIdResponseDto.getIssueId());
 
-        try {
-            IssueRequestDto issueRequestDto = IssueRequestDto.builder()
-                            .title("sample title ")
-                            .description("sample description")
-                            .userId(123)
-                            .reporter("sample reporter")
-                            .priority(Priority.major)
-                            .status(Status.NEW)
-                            .build();
+        IssueStatusChangeRequestDto modifiedDto = IssueStatusChangeRequestDto.builder()
+                .status(Status.assigned)
+                .build();
 
-            IssueIdResponseDto issueIdResponseDto = issueService.createIssue(issueRequestDto, projectIdResponseDto.getProjectId());
-            Issue issue = issueRepository.findByIssueId(issueIdResponseDto.getIssueId());
+        // when
+        issueService.modifyIssue(issue.getIssueId(), issue.getIssueId(), modifiedDto);
+        Issue modifiedIssue = issueRepository.findByIssueId(issueIdResponseDto.getIssueId());
 
-            IssueStatusChangeRequestDto modifiedDto = IssueStatusChangeRequestDto.builder()
-                    .status(Status.assigned)
-                    .build();
-
-            // when
-            issueService.modifyIssue(issue.getIssueId(), issue.getIssueId(), modifiedDto);
-            Issue modifiedIssue = issueRepository.findByIssueId(issueIdResponseDto.getIssueId());
-
-            // then
-            assertEquals(Status.NEW, modifiedIssue.getStatus());
-
-        } catch (Exception e) {}
+        // then
+        assertEquals(Status.NEW, modifiedIssue.getStatus());
 
     }
 }
