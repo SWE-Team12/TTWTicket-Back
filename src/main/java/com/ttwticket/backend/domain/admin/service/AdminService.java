@@ -28,18 +28,18 @@ public class AdminService {
     @Value("${jwt.token.secret}")
     private String secretKey;
 
-    @Transactional
-    public UserIdResponseDto assignUser(AdminRequestDto adminRequestDto) {
-        User user = userRepository.findByEmailAndIsDeleted(adminRequestDto.getEmail(), false);
-        user.setProjectId(adminRequestDto.getProjectId());
-
-        UserIdResponseDto userIdResponseDto = UserIdResponseDto.builder()
-                .userId(userRepository.save(user).getUserId())
-                .build();
-
-        return userIdResponseDto;
-
-    }
+//    @Transactional
+//    public UserIdResponseDto assignUser(AdminRequestDto adminRequestDto) {
+//        User user = userRepository.findByEmailAndIsDeleted(adminRequestDto.getEmail(), false);
+//        user.setProjectId(adminRequestDto.getProjectId());
+//
+//        UserIdResponseDto userIdResponseDto = UserIdResponseDto.builder()
+//                .userId(userRepository.save(user).getUserId())
+//                .build();
+//
+//        return userIdResponseDto;
+//
+//    }
 
     @Transactional
     public ProjectIdResponseDto createProject(ProjectRequestDto projectRequestDto) {
@@ -52,10 +52,15 @@ public class AdminService {
     @Transactional
     public UserIdResponseDto registerUser(UserRequestDto userRequestDto)  {
         String encodedPassword = encoder.encode(userRequestDto.getPassword());
+        Project project = projectValid(userRequestDto.getProjectId());
 
         UserIdResponseDto userIdResponseDto = UserIdResponseDto.builder()
-                .userId(userRepository.save(userRequestDto.toEntity(encodedPassword)).getUserId())
+                .userId(userRepository.save(userRequestDto.toEntity(encodedPassword, project)).getUserId())
                 .build();
         return userIdResponseDto;
+    }
+
+    public Project projectValid(Integer projectId) {
+        return projectRepository.findByProjectId(projectId);
     }
 }
