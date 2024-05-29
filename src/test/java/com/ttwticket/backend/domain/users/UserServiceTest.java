@@ -1,5 +1,11 @@
 package com.ttwticket.backend.domain.users;
 
+import com.ttwticket.backend.domain.issues.IssueRepository;
+import com.ttwticket.backend.domain.projects.ProjectRepository;
+import com.ttwticket.backend.domain.projects.dto.ProjectIdResponseDto;
+import com.ttwticket.backend.domain.projects.dto.ProjectRequestDto;
+import com.ttwticket.backend.domain.projects.dto.ProjectResponseDto;
+import com.ttwticket.backend.domain.projects.service.ProjectService;
 import com.ttwticket.backend.domain.users.dto.*;
 import com.ttwticket.backend.domain.users.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,14 +31,31 @@ class UserServiceTest {
     private UserService userService;
 
     @Autowired
+    private ProjectService projectService;
+
+    @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ProjectRepository projectRepository;
+
+
     private PasswordEncoder passwordEncoder;
+    private ProjectRequestDto projectRequestDto;
+    private ProjectIdResponseDto projectIdResponseDto;
 
     @BeforeEach
     void setUp() {
         passwordEncoder = new BCryptPasswordEncoder();
         userRepository.deleteAll();
+        projectRepository.deleteAll();
+
+        // 단일 프로젝트 생성
+        projectRequestDto = ProjectRequestDto.builder()
+                .title("sample title")
+                .description("sample description")
+                .build();
+        projectIdResponseDto = projectService.createProject(projectRequestDto);
     }
 
     @Test
@@ -87,29 +110,34 @@ class UserServiceTest {
     @DisplayName("모든 유저 조회 성공")
     void 모든유저조회() {
         // given
-        List<User> userList = IntStream.rangeClosed(1, 10)
-                .mapToObj(i -> User.builder()
+        List<UserRequestDto> userRequestDtos = IntStream.rangeClosed(1, 10)
+                .mapToObj(i -> UserRequestDto.builder()
                         .name("test" + i)
                         .email("test email" + i)
                         .password("test password" + i)
                         .role(Role.PL)
                         .build())
                 .collect(Collectors.toList());
-        userRepository.saveAll(userList);
+        userRequestDtos.forEach(userService::registerUser);
+
+        for (UserRequestDto userRequestDto : userRequestDtos) {
+            User user = userRepository.findByEmailAndIsDeleted(userRequestDto.getEmail(), false);
+            user.setProjectId(projectIdResponseDto.getProjectId());
+        }
 
         // when
-        List<UserResponseDto> userResponseDto = userService.getAllUsers();
+        List<UserResponseDto> userResponseDtos = userService.getAllUsers(projectIdResponseDto.getProjectId());
 
         // then
-        for (int i=0; i<userResponseDto.size(); i++) {
-            User user = userRepository.findByUserIdAndIsDeleted(userResponseDto.get(i).getUserId(), false);
-            assertEquals("test" + (i+1), userResponseDto.get(i).getName());
-            assertEquals("test email" + (i+1), userResponseDto.get(i).getEmail());
-            assertEquals("test password" + (i+1), userList.get(i).getPassword());
+        for (int i=0; i<userResponseDtos.size(); i++) {
+            User user = userRepository.findByUserIdAndIsDeleted(userResponseDtos.get(i).getUserId(), false);
+            assertEquals("test" + (i+1), userResponseDtos.get(i).getName());
+            assertEquals("test email" + (i+1), userResponseDtos.get(i).getEmail());
+            assertThat(passwordEncoder.matches("spassword" + (i+1), user.getPassword())).isTrue();
             assertEquals(Role.PL, user.getRole());
         }
 
-        assertEquals(userList.size(), userResponseDto.size());
+        assertEquals(userRequestDtos.size(), 10);
     }
 
     @Test
