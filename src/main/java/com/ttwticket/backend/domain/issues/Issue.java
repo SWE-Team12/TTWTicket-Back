@@ -1,12 +1,17 @@
 package com.ttwticket.backend.domain.issues;
 
 import com.ttwticket.backend.domain.BaseTimeEntity;
+import com.ttwticket.backend.domain.assignees.Assignee;
+import com.ttwticket.backend.domain.fixers.Fixer;
 import com.ttwticket.backend.domain.issues.dto.IssueStatusChangeRequestDto;
 import com.ttwticket.backend.domain.projects.Project;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -41,6 +46,12 @@ public class Issue extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
+
+    @OneToMany(mappedBy = "issue")
+    List<Assignee> assignees = new ArrayList<>();
+
+    @OneToMany(mappedBy = "issue")
+    List<Fixer> fixers = new ArrayList<>();
 
     @Builder
     public Issue(String title, String description, String reporter, Status status, Priority priority, Integer userId, Project project) {
