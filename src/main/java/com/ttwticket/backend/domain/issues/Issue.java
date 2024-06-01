@@ -41,6 +41,10 @@ public class Issue extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Column(nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     private boolean isOpened;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,12 +58,13 @@ public class Issue extends BaseTimeEntity {
     List<Fixer> fixers = new ArrayList<>();
 
     @Builder
-    public Issue(String title, String description, String reporter, Status status, Priority priority, Integer userId, Project project) {
+    public Issue(String title, String description, String reporter, Status status, Priority priority, Category category, Integer userId, Project project) {
         this.title = title;
         this.description = description;
         this.reporter = reporter;
         this.status = status;
         this.priority = priority;
+        this.category = category;
         this.isOpened = true;
         this.userId = userId;
         this.project = project;
