@@ -1,7 +1,8 @@
-package com.ttwticket.backend.domain.users.service;
+package com.ttwticket.backend.domain.issues.service;
 
 import com.ttwticket.backend.domain.fixers.Fixer;
 import com.ttwticket.backend.domain.fixers.FixerRepository;
+import com.ttwticket.backend.domain.issues.Category;
 import com.ttwticket.backend.domain.issues.Issue;
 import com.ttwticket.backend.domain.issues.IssueRepository;
 import com.ttwticket.backend.domain.users.User;
@@ -21,9 +22,8 @@ public class RecommendService {
     private final IssueRepository issueRepository;
     private final UserRepository userRepository;
 
-    private List<RecommendDevResponseDto> recommendAlgorithm() {
+    private List<RecommendDevResponseDto> recommendAlgorithm(List<Issue> issues) {
         Map<Integer, Long> fixerCountMap = new HashMap<>();
-        List<Issue> issues = issueRepository.findAll();
 
         for (Issue issue : issues) {
             List<Fixer> fixers = fixerRepository.findFixerByIssue(issue);
@@ -47,11 +47,12 @@ public class RecommendService {
                 .collect(Collectors.toList());
     }
 
-    public List<RecommendDevResponseDto> recommend() {
-        List<Issue> issues = issueRepository.findAll();
+    public List<RecommendDevResponseDto> recommend(Integer issueId) {
+        Category category = issueRepository.findByIssueId(issueId).getCategory();
+        List<Issue> issues = issueRepository.findIssuesByCategory(category);
         if (issues.isEmpty()) {
             return Collections.emptyList();
         }
-        return recommendAlgorithm();
+        return recommendAlgorithm(issues);
     }
 }

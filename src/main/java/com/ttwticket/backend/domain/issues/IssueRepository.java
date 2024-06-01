@@ -11,8 +11,6 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
       public List<Issue> findByProject_ProjectId(Integer projectId);
       public Issue findByProject_ProjectIdAndIssueId(Integer projectId, Integer issueId);
       public List<Issue> findByProject_ProjectIdAndUserId(Integer projectId, Integer userId);
-//    public List<Issue> findByProjectIdAndStatus(Integer projectId, Status status);
-//    public List<Issue> findByProjectIdAndFixer(Integer projectId, User fixer);
-//    public List<Issue> findByProjectIdAndReporter(Integer projectId, User reporter);
+      List<Issue> findIssuesByCategory(Category category);
 }
 
