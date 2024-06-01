@@ -2,6 +2,8 @@ package com.ttwticket.backend.domain.issues.controller;
 
 import com.ttwticket.backend.domain.issues.dto.*;
 import com.ttwticket.backend.domain.issues.service.IssueService;
+import com.ttwticket.backend.domain.users.dto.RecommendDevResponseDto;
+import com.ttwticket.backend.domain.issues.service.RecommendService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +18,7 @@ import java.util.List;
 public class IssueController {
 
     private final IssueService issueService;
+    private final RecommendService recommendService;
 
     @PostMapping("/{projectId}/issues")
     public IssueIdResponseDto create(@PathVariable("projectId") Integer projectId, @Validated @RequestBody IssueCreateRequestDto issueCreateRequestDto) {
@@ -35,6 +38,11 @@ public class IssueController {
     @GetMapping("/{projectId}/issues/search/{userId}")
     public List<IssueResponseDto> search(@PathVariable("projectId") Integer projectId, @PathVariable("userId") Integer userId) {
         return issueService.getSearchableIssues(projectId, userId);
+    }
+
+    @GetMapping("{projectId}/issues/{issueId}/recommend")
+    public List<RecommendDevResponseDto> recommendDeveloper(@PathVariable("projectId") Integer projectId, @PathVariable("issueId") Integer issueId) {
+        return recommendService.recommend(issueId);
     }
 
     @PatchMapping("/{projectId}/issues/{issueId}")

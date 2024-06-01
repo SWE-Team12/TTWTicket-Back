@@ -1,5 +1,7 @@
 package com.ttwticket.backend.domain.issues.service;
 
+import com.ttwticket.backend.domain.assignees.Assignee;
+import com.ttwticket.backend.domain.assignees.AssigneeRepository;
 import com.ttwticket.backend.domain.issues.Issue;
 import com.ttwticket.backend.domain.issues.IssueRepository;
 import com.ttwticket.backend.domain.issues.dto.*;

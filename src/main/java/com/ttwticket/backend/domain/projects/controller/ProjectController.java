@@ -18,11 +18,6 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-//    @PostMapping("")
-//    public ProjectIdResponseDto create(@RequestBody ProjectRequestDto projectRequestDto) {
-//        return projectService.createProject(projectRequestDto);
-//    }
-
 //    @PatchMapping("{projectId}")
 //    public Integer modify(@PathVariable("projectId") Integer projectId, @RequestBody ProjectRequestDto projectRequestDto) {
 //        return projectService.modifyProject(projectId, projectRequestDto);

@@ -21,10 +21,10 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    @PostMapping("/assign")
-    public UserIdResponseDto assignUser(@RequestBody AdminRequestDto adminRequestDto) {
-        return adminService.assignUser(adminRequestDto);
-    }
+//    @PostMapping("/assign")
+//    public UserIdResponseDto assignUser(@RequestBody AdminRequestDto adminRequestDto) {
+//        return adminService.assignUser(adminRequestDto);
+//    }
 
     @PostMapping("/project")
     public ProjectIdResponseDto create(@RequestBody ProjectRequestDto projectRequestDto) {
