@@ -6,6 +6,7 @@ import com.ttwticket.backend.domain.assignees.AssigneeRepository;
 import com.ttwticket.backend.domain.assignees.dto.AssigneeRequestDto;
 import com.ttwticket.backend.domain.assignees.dto.AssigneeResponseDto;
 import com.ttwticket.backend.domain.assignees.service.AssigneeService;
+import com.ttwticket.backend.domain.issues.Category;
 import com.ttwticket.backend.domain.issues.IssueRepository;
 import com.ttwticket.backend.domain.issues.Priority;
 import com.ttwticket.backend.domain.issues.dto.IssueCreateRequestDto;
@@ -104,6 +105,7 @@ public class AdminServiceTest {
                 .email("test_email")
                 .password("t_password")
                 .role(Role.Developer)
+                .projectId(projectIdResponseDto.getProjectId())
                 .build();
 
         userIdResponseDto = userService.registerUser(userRequestDto);
@@ -115,6 +117,7 @@ public class AdminServiceTest {
                 .description("t_description")
                 .priority(Priority.major)
                 .userId(userIdResponseDto.getUserId())
+                .category(Category.Add_Function)
                 .build();
 
         issueIdResponseDto = issueService.createIssue(issueCreateRequestDto, projectIdResponseDto.getProjectId());
@@ -125,6 +128,7 @@ public class AdminServiceTest {
                         .email("test_email" + i)
                         .password("t_password" + i)
                         .role(Role.Tester)
+                        .projectId(projectIdResponseDto.getProjectId())
                         .build())
                 .toList();
 
@@ -135,6 +139,7 @@ public class AdminServiceTest {
                         .description("t_description" + i)
                         .priority(Priority.major)
                         .userId(userIdResponseDto.getUserId())
+                        .category(Category.Add_Function)
                         .build())
                 .collect(Collectors.toList());
 
@@ -143,19 +148,6 @@ public class AdminServiceTest {
             issueIdResponseDtos.add(issueIdResponseDto);
         }
 
-    }
-
-    @Test
-    @DisplayName("유저 프로젝트 할당 성공")
-    void 유저프로젝트할당() {
-        // given
-        AdminRequestDto adminRequestDto = new AdminRequestDto(user.getEmail(), projectIdResponseDto.getProjectId());
-
-        // when
-        UserIdResponseDto assignedUserIdResponseDto = adminService.assignUser(adminRequestDto);
-
-        // then
-        assertEquals(assignedUserIdResponseDto.getUserId(), userIdResponseDto.getUserId());
     }
 
     @Test
@@ -187,6 +179,7 @@ public class AdminServiceTest {
                 .email("test_email_admin")
                 .password("t_password_admin")
                 .role(Role.Admin)
+                .projectId(projectIdResponseDto.getProjectId())
                 .build();
 
         // when

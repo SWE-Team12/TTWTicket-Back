@@ -3,6 +3,7 @@ package com.ttwticket.backend.domain.assignees;
 import com.ttwticket.backend.domain.assignees.dto.AssigneeRequestDto;
 import com.ttwticket.backend.domain.assignees.dto.AssigneeResponseDto;
 import com.ttwticket.backend.domain.assignees.service.AssigneeService;
+import com.ttwticket.backend.domain.issues.Category;
 import com.ttwticket.backend.domain.issues.IssueRepository;
 import com.ttwticket.backend.domain.issues.Priority;
 import com.ttwticket.backend.domain.issues.dto.IssueCreateRequestDto;
@@ -86,6 +87,7 @@ public class AssigneeServiceTest {
                 .email("test_email")
                 .password("t_password")
                 .role(Role.Developer)
+                .projectId(projectIdResponseDto.getProjectId())
                 .build();
 
         userIdResponseDto = userService.registerUser(userRequestDto);
@@ -96,6 +98,7 @@ public class AssigneeServiceTest {
                 .description("t_description")
                 .priority(Priority.major)
                 .userId(userIdResponseDto.getUserId())
+                .category(Category.Add_Function)
                 .build();
 
         issueIdResponseDto = issueService.createIssue(issueCreateRequestDto, projectIdResponseDto.getProjectId());
@@ -106,6 +109,7 @@ public class AssigneeServiceTest {
                         .email("test_email" + i)
                         .password("t_password" + i)
                         .role(Role.Tester)
+                        .projectId(projectIdResponseDto.getProjectId())
                         .build())
                 .toList();
 
@@ -116,6 +120,7 @@ public class AssigneeServiceTest {
                         .description("t_description" + i)
                         .priority(Priority.major)
                         .userId(userIdResponseDto.getUserId())
+                        .category(Category.Add_Function)
                         .build())
                 .collect(Collectors.toList());
 

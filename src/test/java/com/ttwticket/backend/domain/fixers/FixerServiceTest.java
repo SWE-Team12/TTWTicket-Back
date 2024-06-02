@@ -3,6 +3,7 @@ package com.ttwticket.backend.domain.fixers;
 import com.ttwticket.backend.domain.fixers.dto.FixerRequestDto;
 import com.ttwticket.backend.domain.fixers.dto.FixerResponseDto;
 import com.ttwticket.backend.domain.fixers.service.FixerService;
+import com.ttwticket.backend.domain.issues.Category;
 import com.ttwticket.backend.domain.issues.IssueRepository;
 import com.ttwticket.backend.domain.issues.Priority;
 import com.ttwticket.backend.domain.issues.dto.IssueCreateRequestDto;
@@ -86,6 +87,7 @@ public class FixerServiceTest {
                 .email("test_email")
                 .password("t_password")
                 .role(Role.Developer)
+                .projectId(projectIdResponseDto.getProjectId())
                 .build();
 
         userIdResponseDto = userService.registerUser(userRequestDto);
@@ -96,6 +98,7 @@ public class FixerServiceTest {
                 .description("t_description")
                 .priority(Priority.major)
                 .userId(userIdResponseDto.getUserId())
+                .category(Category.Add_Function)
                 .build();
 
         issueIdResponseDto = issueService.createIssue(issueCreateRequestDto, projectIdResponseDto.getProjectId());
@@ -106,6 +109,7 @@ public class FixerServiceTest {
                         .email("test_email" + i)
                         .password("t_password" + i)
                         .role(Role.Tester)
+                        .projectId(projectIdResponseDto.getProjectId())
                         .build())
                 .toList();
 
@@ -116,6 +120,7 @@ public class FixerServiceTest {
                         .description("t_description" + i)
                         .priority(Priority.major)
                         .userId(userIdResponseDto.getUserId())
+                        .category(Category.Add_Function)
                         .build())
                 .collect(Collectors.toList());
 

@@ -2,6 +2,7 @@ package com.ttwticket.backend.domain.comments;
 
 import com.ttwticket.backend.domain.comments.dto.*;
 import com.ttwticket.backend.domain.comments.service.CommentService;
+import com.ttwticket.backend.domain.issues.Category;
 import com.ttwticket.backend.domain.issues.Issue;
 import com.ttwticket.backend.domain.issues.IssueRepository;
 import com.ttwticket.backend.domain.issues.Priority;
@@ -90,6 +91,7 @@ public class CommentServiceTest {
                 .email("test_email")
                 .password("t_password")
                 .role(Role.Developer)
+                .projectId(projectIdResponseDto.getProjectId())
                 .build();
 
         userIdResponseDto = userService.registerUser(userRequestDto);
@@ -101,6 +103,7 @@ public class CommentServiceTest {
                 .description("t_description")
                 .priority(Priority.major)
                 .userId(userIdResponseDto.getUserId())
+                .category(Category.Add_Function)
                 .build();
 
         issueIdResponseDto = issueService.createIssue(issueCreateRequestDto, projectIdResponseDto.getProjectId());
@@ -112,6 +115,7 @@ public class CommentServiceTest {
                         .email("test_email" + i)
                         .password("t_password" + i)
                         .role(Role.Tester)
+                        .projectId(projectIdResponseDto.getProjectId())
                         .build())
                 .toList();
 
@@ -122,6 +126,7 @@ public class CommentServiceTest {
                         .description("t_description" + i)
                         .priority(Priority.major)
                         .userId(userIdResponseDto.getUserId())
+                        .category(Category.Add_Function)
                         .build())
                 .collect(Collectors.toList());
 

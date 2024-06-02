@@ -18,11 +18,12 @@ public class UserRequestDto {
     private Integer projectId;
 
     @Builder
-    public UserRequestDto(String name, String email, String password, Role role) {
+    public UserRequestDto(String name, String email, String password, Role role, Integer projectId) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.projectId = projectId;
     }
 
     public User toEntity(String password, Project project) {
