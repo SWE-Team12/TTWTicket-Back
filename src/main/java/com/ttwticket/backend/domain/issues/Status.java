@@ -5,5 +5,6 @@ public enum Status {
     assigned,
     resolved,
     closed,
-    reopened
+    reopened,
+    fixed
 }
