@@ -1,6 +1,10 @@
 package com.ttwticket.backend.domain.users;
 
+import com.ttwticket.backend.domain.assignees.AssigneeRepository;
+import com.ttwticket.backend.domain.assignees.service.AssigneeService;
+import com.ttwticket.backend.domain.fixers.FixerRepository;
 import com.ttwticket.backend.domain.issues.IssueRepository;
+import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.projects.ProjectRepository;
 import com.ttwticket.backend.domain.projects.dto.ProjectIdResponseDto;
 import com.ttwticket.backend.domain.projects.dto.ProjectRequestDto;
@@ -39,14 +43,27 @@ class UserServiceTest {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private AssigneeRepository assigneeRepository;
+
+    @Autowired
+    private FixerRepository fixerRepository;
+
 
     private PasswordEncoder passwordEncoder;
     private ProjectRequestDto projectRequestDto;
     private ProjectIdResponseDto projectIdResponseDto;
+    private Project project;
+    @Autowired
+    private IssueRepository issueRepository;
 
     @BeforeEach
     void setUp() {
         passwordEncoder = new BCryptPasswordEncoder();
+
+        fixerRepository.deleteAll();
+        assigneeRepository.deleteAll();
+        issueRepository.deleteAll();
         userRepository.deleteAll();
         projectRepository.deleteAll();
 
@@ -56,6 +73,9 @@ class UserServiceTest {
                 .description("sample description")
                 .build();
         projectIdResponseDto = projectService.createProject(projectRequestDto);
+
+        project = projectRepository.findByProjectId(projectIdResponseDto.getProjectId());
+
     }
 
     @Test
@@ -67,6 +87,7 @@ class UserServiceTest {
                 .email("semail")
                 .password("spassword")
                 .role(Role.PL)
+                .projectId(project.getProjectId())
                 .build();
 
         //when
@@ -90,6 +111,7 @@ class UserServiceTest {
                 .email("semail")
                 .password("spassword")
                 .role(Role.PL)
+                .projectId(project.getProjectId())
                 .build();
 
         userService.registerUser(userRequestDto);
@@ -116,13 +138,14 @@ class UserServiceTest {
                         .email("test email" + i)
                         .password("test password" + i)
                         .role(Role.PL)
+                        .projectId(project.getProjectId())
                         .build())
                 .collect(Collectors.toList());
         userRequestDtos.forEach(userService::registerUser);
 
         for (UserRequestDto userRequestDto : userRequestDtos) {
             User user = userRepository.findByEmailAndIsDeleted(userRequestDto.getEmail(), false);
-            user.setProjectId(projectIdResponseDto.getProjectId());
+            user.setProject(project);
         }
 
         // when
@@ -133,7 +156,7 @@ class UserServiceTest {
             User user = userRepository.findByUserIdAndIsDeleted(userResponseDtos.get(i).getUserId(), false);
             assertEquals("test" + (i+1), userResponseDtos.get(i).getName());
             assertEquals("test email" + (i+1), userResponseDtos.get(i).getEmail());
-            assertThat(passwordEncoder.matches("spassword" + (i+1), user.getPassword())).isTrue();
+            assertThat(passwordEncoder.matches("test password" + (i+1), user.getPassword())).isTrue();
             assertEquals(Role.PL, user.getRole());
         }
 
@@ -149,6 +172,7 @@ class UserServiceTest {
                 .email("semail")
                 .password("spassword")
                 .role(Role.PL)
+                .projectId(project.getProjectId())
                 .build();
 
         userService.registerUser(userRequestDto);
@@ -175,6 +199,7 @@ class UserServiceTest {
                 .email("semail")
                 .password("spassword")
                 .role(Role.PL)
+                .projectId(project.getProjectId())
                 .build();
 
         userService.registerUser(userRequestDto);
