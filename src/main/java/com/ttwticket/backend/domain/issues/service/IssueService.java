@@ -12,6 +12,8 @@ import com.ttwticket.backend.domain.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,14 +56,13 @@ public class IssueService {
                         .map(Assignee::getIssue)
                         .map(Issue::getIssueId).collect(Collectors.toList());
 
-        issues.stream()
+        List<Issue> filteredIssue = issues.stream()
                 .filter(issue->issueIds.contains(issue.getIssueId()))
                 .collect(Collectors.toList());
 
-        return issues.stream()
+        return filteredIssue.stream()
                 .map(issue -> IssueResponseDto.builder().issue(issue).build())
                 .collect(Collectors.toList());
-
     }
 
     public List<IssueResponseDto> getReportedIssues(Integer projectId, Integer userId) {
