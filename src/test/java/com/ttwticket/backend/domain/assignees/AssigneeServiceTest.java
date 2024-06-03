@@ -6,6 +6,7 @@ import com.ttwticket.backend.domain.assignees.service.AssigneeService;
 import com.ttwticket.backend.domain.issues.Category;
 import com.ttwticket.backend.domain.issues.IssueRepository;
 import com.ttwticket.backend.domain.issues.Priority;
+import com.ttwticket.backend.domain.issues.Status;
 import com.ttwticket.backend.domain.issues.dto.IssueCreateRequestDto;
 import com.ttwticket.backend.domain.issues.dto.IssueIdResponseDto;
 import com.ttwticket.backend.domain.issues.service.IssueService;
@@ -144,7 +145,7 @@ public class AssigneeServiceTest {
         // then
         assertEquals(assigneeResponseDto.getName(), userRequestDto.getName());
         assertEquals(assigneeResponseDto.getIssueId(), issueIdResponseDto.getIssueId());
-
+        assertEquals(issueRepository.findByIssueId(issueIdResponseDto.getIssueId()).getStatus(), Status.assigned);
     }
 
     @Test
@@ -161,6 +162,7 @@ public class AssigneeServiceTest {
                 // then
                 assertEquals(assigneeResponseDto.getName(), userRequestDtos.get(i).getName());
                 assertEquals(assigneeResponseDto.getIssueId(), issueIdResponseDto.getIssueId());
+                assertEquals(issueRepository.findByIssueId(issueIdResponseDto.getIssueId()).getStatus(), Status.assigned);
             } catch (Exception e) {}
         }
 

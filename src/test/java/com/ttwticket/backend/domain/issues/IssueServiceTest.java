@@ -4,6 +4,7 @@ import com.ttwticket.backend.domain.assignees.AssigneeRepository;
 import com.ttwticket.backend.domain.assignees.dto.AssigneeRequestDto;
 import com.ttwticket.backend.domain.assignees.dto.AssigneeResponseDto;
 import com.ttwticket.backend.domain.assignees.service.AssigneeService;
+import com.ttwticket.backend.domain.comments.CommentRepository;
 import com.ttwticket.backend.domain.fixers.Fixer;
 import com.ttwticket.backend.domain.fixers.FixerRepository;
 import com.ttwticket.backend.domain.fixers.dto.FixerRequestDto;
@@ -84,11 +85,14 @@ class IssueServiceTest {
     private User user;
     @Autowired
     private FixerService fixerService;
+    @Autowired
+    private CommentRepository commentRepository;
 
     @BeforeEach
     void setUp() {
         fixerRepository.deleteAll();
         assigneeRepository.deleteAll();
+        commentRepository.deleteAll();
         issueRepository.deleteAll();
         userRepository.deleteAll();
         projectRepository.deleteAll();
@@ -342,12 +346,12 @@ class IssueServiceTest {
         IssueIdResponseDto issueIdResponseDto = issueService.createIssue(issueCreateRequestDto, projectIdResponseDto.getProjectId());
 
         // when
-        IssueStatusChangeRequestDto issueStatusChangeRequestDto = new IssueStatusChangeRequestDto(Status.NEW);
+        IssueStatusChangeRequestDto issueStatusChangeRequestDto = new IssueStatusChangeRequestDto(Status.closed);
 
         int id = issueService.modifyIssue(projectIdResponseDto.getProjectId(), issueIdResponseDto.getIssueId(), issueStatusChangeRequestDto);
 
         // then
-        assertEquals(Status.NEW, issueStatusChangeRequestDto.getStatus());
+        assertEquals(Status.closed, issueStatusChangeRequestDto.getStatus());
         assertEquals(issueIdResponseDto.getIssueId(), id);
     }
 

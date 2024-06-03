@@ -1,10 +1,7 @@
 package com.ttwticket.backend.domain.admin;
 
-import com.ttwticket.backend.domain.admin.dto.AdminRequestDto;
 import com.ttwticket.backend.domain.admin.service.AdminService;
 import com.ttwticket.backend.domain.assignees.AssigneeRepository;
-import com.ttwticket.backend.domain.assignees.dto.AssigneeRequestDto;
-import com.ttwticket.backend.domain.assignees.dto.AssigneeResponseDto;
 import com.ttwticket.backend.domain.assignees.service.AssigneeService;
 import com.ttwticket.backend.domain.issues.Category;
 import com.ttwticket.backend.domain.issues.IssueRepository;
@@ -16,7 +13,6 @@ import com.ttwticket.backend.domain.projects.Project;
 import com.ttwticket.backend.domain.projects.ProjectRepository;
 import com.ttwticket.backend.domain.projects.dto.ProjectIdResponseDto;
 import com.ttwticket.backend.domain.projects.dto.ProjectRequestDto;
-import com.ttwticket.backend.domain.projects.dto.ProjectResponseDto;
 import com.ttwticket.backend.domain.projects.service.ProjectService;
 import com.ttwticket.backend.domain.users.Role;
 import com.ttwticket.backend.domain.users.User;
@@ -43,9 +39,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class AdminServiceTest {
-
-    @Autowired
-    private AssigneeService assigneeService;
 
     @Autowired
     private ProjectService projectService;
@@ -76,10 +69,8 @@ public class AdminServiceTest {
     private IssueIdResponseDto issueIdResponseDto;
     private ProjectRequestDto projectRequestDto;
     private ProjectIdResponseDto projectIdResponseDto;
-    private List<UserRequestDto> userRequestDtos;
     private List<IssueCreateRequestDto> issueCreateRequestDtos;
     private List<IssueIdResponseDto> issueIdResponseDtos = new ArrayList<>();;
-    private User user;
     private PasswordEncoder passwordEncoder;
 
     @BeforeEach
@@ -109,7 +100,6 @@ public class AdminServiceTest {
                 .build();
 
         userIdResponseDto = userService.registerUser(userRequestDto);
-        user = userRepository.findByUserIdAndIsDeleted(userIdResponseDto.getUserId(), false);
 
         // 단일 이슈 생성
         IssueCreateRequestDto issueCreateRequestDto = IssueCreateRequestDto.builder()
@@ -121,17 +111,6 @@ public class AdminServiceTest {
                 .build();
 
         issueIdResponseDto = issueService.createIssue(issueCreateRequestDto, projectIdResponseDto.getProjectId());
-
-        // 유저 리스트 생성
-        userRequestDtos = IntStream.rangeClosed(1, 10).mapToObj(i -> UserRequestDto.builder()
-                        .name("t_name" + i)
-                        .email("test_email" + i)
-                        .password("t_password" + i)
-                        .role(Role.Tester)
-                        .projectId(projectIdResponseDto.getProjectId())
-                        .build())
-                .toList();
-
 
         // 이슈 리스트 생성
         issueCreateRequestDtos = IntStream.rangeClosed(1, 10).mapToObj(i -> IssueCreateRequestDto.builder()
